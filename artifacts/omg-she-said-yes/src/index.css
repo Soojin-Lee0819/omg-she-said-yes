@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Outfit:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@300..500&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -59,6 +59,7 @@
 
   --font-sans: var(--app-font-sans);
   --font-serif: var(--app-font-serif);
+  --font-display: var(--app-font-display);
   --font-mono: var(--app-font-mono);
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -67,78 +68,80 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* LIGHT MODE */
+/* Candlelit romantic dark theme */
 :root {
-  --button-outline: rgba(0,0,0, .10);
-  --badge-outline: rgba(0,0,0, .05);
+  --button-outline: rgba(196, 155, 108, 0.20);
+  --badge-outline: rgba(196, 155, 108, 0.10);
 
-  --opaque-button-border-intensity: -8;
+  --opaque-button-border-intensity: 9;
 
-  --elevate-1: rgba(0,0,0, .03);
-  --elevate-2: rgba(0,0,0, .08);
+  --elevate-1: rgba(196, 155, 108, 0.04);
+  --elevate-2: rgba(196, 155, 108, 0.09);
 
-  /* Warm Ivory */
-  --background: 40 33% 96%;
-  --foreground: 330 30% 20%;
-  --border: 30 15% 85%;
+  /* Deep espresso background */
+  --background: 24 40% 7%;
+  --foreground: 38 55% 88%;
+  --border: 26 30% 16%;
 
-  --card: 30 40% 98%;
-  --card-foreground: 330 30% 20%;
-  --card-border: 30 20% 90%;
+  /* Warm dark parchment card */
+  --card: 26 35% 11%;
+  --card-foreground: 38 50% 90%;
+  --card-border: 28 28% 18%;
 
-  --sidebar: 40 33% 94%;
-  --sidebar-foreground: 330 30% 20%;
-  --sidebar-border: 30 15% 85%;
-  --sidebar-primary: 340 40% 45%;
-  --sidebar-primary-foreground: 40 33% 96%;
-  --sidebar-accent: 330 20% 90%;
-  --sidebar-accent-foreground: 330 30% 20%;
-  --sidebar-ring: 340 40% 45%;
+  --sidebar: 24 40% 7%;
+  --sidebar-foreground: 38 55% 88%;
+  --sidebar-border: 26 30% 16%;
+  --sidebar-primary: 34 55% 60%;
+  --sidebar-primary-foreground: 24 40% 7%;
+  --sidebar-accent: 26 30% 18%;
+  --sidebar-accent-foreground: 38 55% 88%;
+  --sidebar-ring: 34 55% 60%;
 
-  --popover: 30 40% 98%;
-  --popover-foreground: 330 30% 20%;
-  --popover-border: 30 20% 90%;
+  --popover: 26 35% 11%;
+  --popover-foreground: 38 50% 90%;
+  --popover-border: 28 28% 18%;
 
-  /* Deep Rose */
-  --primary: 340 40% 45%;
-  --primary-foreground: 40 33% 96%;
+  /* Warm amber gold */
+  --primary: 34 55% 60%;
+  --primary-foreground: 24 40% 7%;
 
-  /* Blush */
-  --secondary: 340 30% 85%;
-  --secondary-foreground: 330 30% 20%;
+  /* Dusty rose */
+  --secondary: 350 25% 35%;
+  --secondary-foreground: 38 50% 90%;
 
-  --muted: 30 20% 90%;
-  --muted-foreground: 330 15% 45%;
+  --muted: 26 25% 18%;
+  --muted-foreground: 34 20% 55%;
 
-  /* Plum Accent */
-  --accent: 330 30% 30%;
-  --accent-foreground: 40 33% 96%;
+  /* Deep rose accent */
+  --accent: 350 40% 55%;
+  --accent-foreground: 38 55% 92%;
 
   --destructive: 0 60% 50%;
   --destructive-foreground: 0 0% 100%;
 
-  --input: 30 15% 85%;
-  --ring: 340 40% 45%;
+  --input: 26 30% 16%;
+  --ring: 34 55% 60%;
 
-  --chart-1: 340 40% 45%;
-  --chart-2: 330 30% 30%;
-  --chart-3: 340 30% 85%;
-  --chart-4: 30 20% 90%;
-  --chart-5: 40 33% 96%;
+  --chart-1: 34 55% 60%;
+  --chart-2: 350 40% 55%;
+  --chart-3: 350 25% 35%;
+  --chart-4: 26 25% 18%;
+  --chart-5: 24 40% 7%;
 
   --app-font-sans: 'Outfit', sans-serif;
   --app-font-serif: 'Fraunces', serif;
+  --app-font-display: 'Cormorant Garamond', serif;
   --app-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --radius: 1rem;
-  
-  --shadow-2xs: 0px 2px 0px 0px hsl(330 20% 15% / 0.05);
-  --shadow-xs: 0px 2px 0px 0px hsl(330 20% 15% / 0.05);
-  --shadow-sm: 0px 2px 0px 0px hsl(330 20% 15% / 0.05), 0px 1px 2px -1px hsl(330 20% 15% / 0.05);
-  --shadow: 0px 2px 0px 0px hsl(330 20% 15% / 0.05), 0px 1px 2px -1px hsl(330 20% 15% / 0.05);
-  --shadow-md: 0px 2px 0px 0px hsl(330 20% 15% / 0.05), 0px 2px 4px -1px hsl(330 20% 15% / 0.05);
-  --shadow-lg: 0px 2px 0px 0px hsl(330 20% 15% / 0.05), 0px 4px 6px -1px hsl(330 20% 15% / 0.05);
-  --shadow-xl: 0px 2px 0px 0px hsl(330 20% 15% / 0.05), 0px 8px 10px -1px hsl(330 20% 15% / 0.05);
-  --shadow-2xl: 0px 2px 0px 0px hsl(330 20% 15% / 0.05);
+
+  --shadow-2xs: 0px 2px 4px 0px hsl(20 50% 4% / 0.5);
+  --shadow-xs: 0px 2px 4px 0px hsl(20 50% 4% / 0.5);
+  --shadow-sm: 0px 4px 8px -1px hsl(20 50% 4% / 0.6);
+  --shadow: 0px 4px 12px -2px hsl(20 50% 4% / 0.7);
+  --shadow-md: 0px 8px 24px -4px hsl(20 50% 4% / 0.8);
+  --shadow-lg: 0px 12px 32px -6px hsl(20 50% 4% / 0.85);
+  --shadow-xl: 0px 20px 48px -8px hsl(20 50% 4% / 0.9);
+  --shadow-2xl: 0px 32px 64px -12px hsl(20 50% 4% / 0.95);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
@@ -151,71 +154,6 @@
   --destructive-border: hsl(var(--destructive));
 }
 
-.dark {
-  --button-outline: rgba(255,255,255, .10);
-  --badge-outline: rgba(255,255,255, .05);
-
-  --opaque-button-border-intensity: 9;
-
-  --elevate-1: rgba(255,255,255, .04);
-  --elevate-2: rgba(255,255,255, .09);
-
-  /* Deep Plum background for dark mode */
-  --background: 330 30% 12%;
-  --foreground: 40 33% 96%;
-  --border: 330 20% 20%;
-
-  --card: 330 25% 15%;
-  --card-foreground: 40 33% 96%;
-  --card-border: 330 20% 22%;
-
-  --sidebar: 330 30% 14%;
-  --sidebar-foreground: 40 33% 96%;
-  --sidebar-border: 330 20% 20%;
-  --sidebar-primary: 340 40% 55%;
-  --sidebar-primary-foreground: 330 30% 12%;
-  --sidebar-accent: 330 25% 22%;
-  --sidebar-accent-foreground: 40 33% 96%;
-  --sidebar-ring: 340 40% 55%;
-
-  --popover: 330 25% 15%;
-  --popover-foreground: 40 33% 96%;
-  --popover-border: 330 20% 22%;
-
-  --primary: 340 40% 55%;
-  --primary-foreground: 40 33% 96%;
-
-  --secondary: 330 20% 25%;
-  --secondary-foreground: 40 33% 96%;
-
-  --muted: 330 20% 20%;
-  --muted-foreground: 330 15% 65%;
-
-  --accent: 340 30% 40%;
-  --accent-foreground: 40 33% 96%;
-
-  --destructive: 0 60% 50%;
-  --destructive-foreground: 0 0% 100%;
-
-  --input: 330 20% 22%;
-  --ring: 340 40% 55%;
-
-  --chart-1: 340 40% 55%;
-  --chart-2: 340 30% 40%;
-  --chart-3: 330 20% 25%;
-  --chart-4: 330 20% 20%;
-  --chart-5: 330 30% 12%;
-
-  --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.2);
-  --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.2);
-  --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.2), 0px 1px 2px -1px hsl(0 0% 0% / 0.2);
-  --shadow: 0px 2px 0px 0px hsl(0 0% 0% / 0.2), 0px 1px 2px -1px hsl(0 0% 0% / 0.2);
-  --shadow-md: 0px 2px 0px 0px hsl(0 0% 0% / 0.2), 0px 2px 4px -1px hsl(0 0% 0% / 0.2);
-  --shadow-lg: 0px 2px 0px 0px hsl(0 0% 0% / 0.2), 0px 4px 6px -1px hsl(0 0% 0% / 0.2);
-  --shadow-xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.2), 0px 8px 10px -1px hsl(0 0% 0% / 0.2);
-  --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.2);
-}
-
 @layer base {
   * {
     @apply border-border;
@@ -226,11 +164,23 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-normal;
+    @apply font-serif font-light;
   }
 }
 
 @layer utilities {
+  .font-display {
+    font-family: var(--app-font-display);
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   input[type="search"]::-webkit-search-cancel-button {
     @apply hidden;
   }
@@ -240,4 +190,31 @@
     color: hsl(var(--muted-foreground));
     pointer-events: none;
   }
+}
+
+/* Candlelight ambient glow background */
+.candle-bg {
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(180, 100, 30, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 20% 60%, rgba(160, 70, 40, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 40%, rgba(150, 80, 20, 0.08) 0%, transparent 60%),
+    hsl(24, 40%, 7%);
+}
+
+/* Film grain overlay */
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+}
+
+/* Parchment card texture */
+.parchment-card {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(196, 155, 108, 0.07) 0%, transparent 70%),
+    hsl(var(--card));
 }
