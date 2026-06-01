@@ -39,7 +39,15 @@ export default function Deck() {
   const [direction, setDirection] = useState(0);
   const [bgIndex, setBgIndex] = useState(0);
 
-  const backgrounds = ["/photos/candles.webp", "/photos/villa.jpg", "/photos/ceremony.jpg"];
+  const backgrounds = [
+    "/photos/candlelit-table.jpg",
+    "/photos/ceremony2.jpg",
+    "/photos/pergola-lake.jpg",
+    "/photos/clifftop-dinner.jpg",
+    "/photos/kiss-garden.jpg",
+    "/photos/spin-embrace.jpg",
+    "/photos/fairy-lights.jpg",
+  ];
 
   const activeQuestions = useMemo(() => {
     if (state.activeCategory === "all") return allQuestions;
@@ -53,7 +61,7 @@ export default function Deck() {
     if (state.currentIndex < activeQuestions.length - 1) {
       setDirection(1);
       setCurrentIndex(state.currentIndex + 1);
-      if ((state.currentIndex + 1) % 34 === 0) setBgIndex(i => (i + 1) % backgrounds.length);
+      if ((state.currentIndex + 1) % 15 === 0) setBgIndex(i => (i + 1) % backgrounds.length);
     } else {
       setDirection(1);
       setCurrentIndex(activeQuestions.length);
@@ -240,8 +248,7 @@ export default function Deck() {
               }}
               className="w-full max-w-lg rounded-[2rem] flex flex-col cursor-grab active:cursor-grabbing relative overflow-hidden select-none"
               style={{
-                minHeight: "420px",
-                maxHeight: "calc(100dvh - 280px)",
+                height: "clamp(460px, 58vh, 560px)",
                 background: "linear-gradient(160deg, rgba(255,248,232,0.97) 0%, rgba(250,238,212,0.96) 100%)",
                 border: "1px solid rgba(180,140,80,0.25)",
                 boxShadow: "0 32px 80px rgba(2,1,0,0.85), 0 0 0 1px rgba(255,255,255,0.5) inset",
