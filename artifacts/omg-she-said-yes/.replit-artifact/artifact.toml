@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "OMG She Said YES"
+version = "1.0.0"
+id = "artifacts/omg-she-said-yes"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23678
+
+[services.development]
+run = "pnpm --filter @workspace/omg-she-said-yes run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/omg-she-said-yes", "run", "build" ]
+publicDir = "artifacts/omg-she-said-yes/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23678"
+BASE_PATH = "/"
