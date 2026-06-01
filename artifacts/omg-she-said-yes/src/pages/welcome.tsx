@@ -19,20 +19,19 @@ export default function Welcome() {
   return (
     <div className="min-h-[100dvh] w-full flex flex-col relative overflow-hidden">
 
-      {/* Full-bleed background photo */}
+      {/* Full-bleed background photo — Lake Como ceremony */}
       <div
-        className="absolute inset-0 bg-center bg-cover"
-        style={{ backgroundImage: "url('/photos/garden.jpg')" }}
+        className="absolute inset-0 bg-cover"
+        style={{ backgroundImage: "url('/photos/wedding.jpg')", backgroundPosition: "center 30%" }}
       />
 
-      {/* Layered overlays for depth + readability */}
-      {/* Deep bottom-to-top gradient so text panel reads cleanly */}
+      {/* Lighter overlay — lets the sunlit scene breathe, still readable */}
       <div className="absolute inset-0" style={{
-        background: "linear-gradient(to top, rgba(10,5,2,0.97) 0%, rgba(10,5,2,0.75) 35%, rgba(10,5,2,0.30) 65%, rgba(10,5,2,0.15) 100%)"
+        background: "linear-gradient(to top, rgba(8,4,1,0.96) 0%, rgba(8,4,1,0.60) 40%, rgba(8,4,1,0.18) 70%, rgba(8,4,1,0.08) 100%)"
       }} />
-      {/* Soft centre vignette */}
+      {/* Edge vignette only — keeps centre photo visible */}
       <div className="absolute inset-0" style={{
-        background: "radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(6,3,1,0.45) 100%)"
+        background: "radial-gradient(ellipse 75% 75% at 50% 45%, transparent 40%, rgba(4,2,0,0.40) 100%)"
       }} />
       {/* Film grain */}
       <div className="grain-overlay" style={{ opacity: 0.04 }} />

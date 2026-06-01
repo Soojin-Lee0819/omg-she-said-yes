@@ -238,45 +238,47 @@ export default function Deck() {
                 if (offset.x < -60) handleNext();
                 else if (offset.x > 60) handlePrev();
               }}
-              className="w-full max-w-lg rounded-[2rem] border flex flex-col cursor-grab active:cursor-grabbing relative overflow-hidden select-none"
+              className="w-full max-w-lg rounded-[2rem] flex flex-col cursor-grab active:cursor-grabbing relative overflow-hidden select-none"
               style={{
                 minHeight: "420px",
                 maxHeight: "calc(100dvh - 280px)",
-                background: "rgba(12,6,2,0.84)",
-                borderColor: "rgba(196,155,108,0.15)",
-                boxShadow: "0 32px 80px rgba(2,1,0,0.92), 0 0 60px rgba(196,155,108,0.05) inset",
-                backdropFilter: "blur(24px)",
+                background: "linear-gradient(160deg, rgba(255,248,232,0.97) 0%, rgba(250,238,212,0.96) 100%)",
+                border: "1px solid rgba(180,140,80,0.25)",
+                boxShadow: "0 32px 80px rgba(2,1,0,0.85), 0 0 0 1px rgba(255,255,255,0.5) inset",
                 padding: "2rem 2.5rem",
               }}
             >
-              <div className="absolute inset-0 grain-overlay opacity-40" />
+              {/* Subtle warm grain on bright card */}
+              <div className="absolute inset-0 rounded-[2rem] pointer-events-none" style={{
+                backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+                backgroundSize: "128px 128px",
+                opacity: 0.025,
+              }} />
 
-              {/* Corner ornaments */}
-              <div className="absolute top-5 left-5 text-primary"><CornerOrnament /></div>
-              <div className="absolute top-5 right-5 text-primary"><CornerOrnament flip /></div>
+              {/* Corner ornaments — dark on bright card */}
+              <div className="absolute top-5 left-5" style={{ color: "rgba(140,90,40,0.35)" }}><CornerOrnament /></div>
+              <div className="absolute top-5 right-5" style={{ color: "rgba(140,90,40,0.35)" }}><CornerOrnament flip /></div>
 
               {/* Category label */}
               <div className="relative z-10 text-center pt-3">
-                <span className="font-sans font-light text-[10px] uppercase tracking-[0.28em]"
-                  style={{ color: "rgba(196,155,108,0.55)" }}>
+                <span className="font-sans font-medium text-[10px] uppercase tracking-[0.28em]"
+                  style={{ color: "rgba(140,90,40,0.70)" }}>
                   {currentQuestion.categoryName}
                 </span>
-                <div className="mt-3" style={{ color: "rgba(196,155,108,0.35)" }}>
+                <div className="mt-3" style={{ color: "rgba(160,110,55,0.45)" }}>
                   <FloralSeparator />
                 </div>
               </div>
 
-              {/* Question */}
+              {/* Question — Lora for maximum readability */}
               <div className="relative z-10 flex-1 flex items-center justify-center py-6 px-2">
                 <h2
-                  className="font-display text-center leading-relaxed"
+                  className="font-lora text-center"
                   style={{
-                    fontSize: "clamp(1.25rem, 3vw, 1.75rem)",
-                    fontStyle: "italic",
-                    fontWeight: 300,
-                    lineHeight: 1.6,
-                    color: "rgba(240,225,200,0.95)",
-                    textShadow: "0 1px 12px rgba(4,2,0,0.6)",
+                    fontSize: "clamp(1.2rem, 2.8vw, 1.6rem)",
+                    fontWeight: 400,
+                    lineHeight: 1.65,
+                    color: "rgba(42,22,8,0.92)",
                   }}
                 >
                   {currentQuestion.question}
@@ -288,15 +290,15 @@ export default function Deck() {
                 <button
                   onClick={() => toggleDiscussed(currentQuestion.id)}
                   className={cn(
-                    "flex items-center gap-2.5 px-6 py-2.5 rounded-full font-sans font-light text-xs transition-all duration-300 border",
-                    isDiscussed
-                      ? "bg-amber-900/30"
-                      : "bg-transparent hover:bg-white/5"
+                    "flex items-center gap-2.5 px-6 py-2.5 rounded-full font-sans text-xs transition-all duration-300 border",
+                    isDiscussed ? "" : "hover:border-amber-600/30"
                   )}
                   style={{
                     letterSpacing: "0.1em",
-                    color: isDiscussed ? "rgba(220,185,130,0.90)" : "rgba(155,130,95,0.60)",
-                    borderColor: isDiscussed ? "rgba(196,155,108,0.35)" : "rgba(196,155,108,0.15)",
+                    fontWeight: 500,
+                    color: isDiscussed ? "rgba(120,70,20,0.90)" : "rgba(140,100,50,0.65)",
+                    borderColor: isDiscussed ? "rgba(160,110,40,0.45)" : "rgba(160,120,60,0.25)",
+                    background: isDiscussed ? "rgba(180,130,60,0.12)" : "transparent",
                   }}
                   data-testid={`button-discuss-${currentQuestion.id}`}
                 >
