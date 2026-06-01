@@ -1,10 +1,11 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { Link } from "wouter";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { Link, useParams, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, ChevronLeft, ChevronRight, Home, Check } from "lucide-react";
+import { Heart, ChevronLeft, ChevronRight, Home, Check, Share2 } from "lucide-react";
 import { allQuestions, categories } from "../data/questions";
 import { useProgress } from "../hooks/useProgress";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 function FloralSeparator() {
   return (
@@ -34,10 +35,77 @@ function CornerOrnament({ flip }: { flip?: boolean }) {
   );
 }
 
+function buildShareUrl(questionId: string): string {
+  const base = window.location.origin + import.meta.env.BASE_URL.replace(/\/$/, "");
+  return `${base}/deck/${questionId}`;
+}
+
+function ShareButton({
+  text,
+  url,
+  label = "Share",
+  className,
+  style,
+}: {
+  text: string;
+  url: string;
+  label?: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = useCallback(async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ text, url });
+        return;
+      } catch {
+        // user dismissed native sheet — fall through to clipboard
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(`${text}\n\n${url}`);
+      setCopied(true);
+      toast({
+        title: "Copied to clipboard",
+        description: "Share the link with your partner or a friend.",
+        duration: 2500,
+      });
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      toast({
+        title: "Couldn't copy",
+        description: "Try copying the URL from your address bar.",
+        duration: 3000,
+      });
+    }
+  }, [text, url, toast]);
+
+  return (
+    <button
+      onClick={handleShare}
+      className={cn(
+        "flex items-center gap-2 transition-all duration-200",
+        className
+      )}
+      style={style}
+      aria-label="Share this question"
+    >
+      <Share2 className="w-3.5 h-3.5" strokeWidth={1.5} />
+      <span>{copied ? "Copied!" : label}</span>
+    </button>
+  );
+}
+
 export default function Deck() {
+  const params = useParams<{ questionId?: string }>();
+  const [, navigate] = useLocation();
   const { state, toggleDiscussed, setActiveCategory, setCurrentIndex } = useProgress();
   const [direction, setDirection] = useState(0);
   const [bgIndex, setBgIndex] = useState(0);
+  const deepLinkApplied = useRef(false);
 
   const backgrounds = [
     "/photos/candlelit-table.jpg",
@@ -49,6 +117,24 @@ export default function Deck() {
     "/photos/fairy-lights.jpg",
   ];
 
+  // On first mount, if a questionId param is present, jump to that question.
+  useEffect(() => {
+    if (deepLinkApplied.current) return;
+    const qid = params.questionId;
+    if (!qid) return;
+    const idx = allQuestions.findIndex((q) => q.id === qid);
+    if (idx === -1) return;
+    deepLinkApplied.current = true;
+    const q = allQuestions[idx];
+    setActiveCategory(q.categoryId);
+    // After setActiveCategory resets index to 0, we need to set index.
+    // Find the question's position within its category.
+    const categoryQuestions = allQuestions.filter((cq) => cq.categoryId === q.categoryId);
+    const catIdx = categoryQuestions.findIndex((cq) => cq.id === qid);
+    setCurrentIndex(catIdx >= 0 ? catIdx : 0);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const activeQuestions = useMemo(() => {
     if (state.activeCategory === "all") return allQuestions;
     return allQuestions.filter((q) => q.categoryId === state.activeCategory);
@@ -56,6 +142,14 @@ export default function Deck() {
 
   const currentQuestion = activeQuestions[state.currentIndex];
   const isDiscussed = currentQuestion && state.discussedCards.includes(currentQuestion.id);
+
+  // Update the URL to reflect the current question (without pushing a new history entry).
+  useEffect(() => {
+    if (!currentQuestion) return;
+    const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+    const target = `${base}/deck/${currentQuestion.id}`;
+    window.history.replaceState(null, "", target);
+  }, [currentQuestion, navigate]);
 
   const handleNext = useCallback(() => {
     if (state.currentIndex < activeQuestions.length - 1) {
@@ -89,6 +183,10 @@ export default function Deck() {
     : 0;
 
   const isCelebration = state.currentIndex === activeQuestions.length;
+
+  const categoryName = state.activeCategory === "all"
+    ? "All Questions"
+    : categories.find(c => c.id === state.activeCategory)?.name ?? "All Questions";
 
   return (
     <div className="min-h-[100dvh] w-full flex flex-col relative overflow-hidden">
@@ -127,7 +225,7 @@ export default function Deck() {
           </Link>
           <div className="font-sans font-light text-[10px] uppercase tracking-[0.25em]"
             style={{ color: "rgba(196,155,108,0.65)" }}>
-            {state.activeCategory === "all" ? "All Questions" : categories.find(c => c.id === state.activeCategory)?.name}
+            {categoryName}
           </div>
           <div className="w-8" />
         </div>
@@ -214,10 +312,28 @@ export default function Deck() {
                   </h2>
                   <p className="font-sans font-light text-sm leading-relaxed max-w-xs mx-auto"
                     style={{ color: "rgba(180,155,120,0.75)" }}>
-                    You've completed this chapter together. Take a quiet moment to hold what you've learned about each other.
+                    You've completed{" "}
+                    <em className="not-italic" style={{ color: "rgba(220,190,140,0.90)" }}>
+                      {categoryName}
+                    </em>{" "}
+                    together. Take a quiet moment to hold what you've learned about each other.
                   </p>
                 </div>
                 <div style={{ color: "rgba(196,155,108,0.5)" }}><FloralSeparator /></div>
+
+                {/* Share completion */}
+                <ShareButton
+                  text={`We just finished "${categoryName}" on OMG She Said YES 💍\n\n101 questions to ask each other before you say "I do."`}
+                  url={window.location.origin + import.meta.env.BASE_URL.replace(/\/$/, "")}
+                  label="Share this milestone"
+                  className="mx-auto px-6 py-2.5 rounded-full border font-sans font-light text-xs uppercase"
+                  style={{
+                    letterSpacing: "0.14em",
+                    color: "rgba(196,155,108,0.75)",
+                    borderColor: "rgba(196,155,108,0.22)",
+                  }}
+                />
+
                 <button
                   onClick={() => setActiveCategory("all")}
                   className="font-sans font-light text-xs uppercase transition-all duration-200 px-8 py-3 rounded-full border"
@@ -265,6 +381,17 @@ export default function Deck() {
               {/* Corner ornaments — dark on bright card */}
               <div className="absolute top-5 left-5" style={{ color: "rgba(140,90,40,0.35)" }}><CornerOrnament /></div>
               <div className="absolute top-5 right-5" style={{ color: "rgba(140,90,40,0.35)" }}><CornerOrnament flip /></div>
+
+              {/* Share button — top right inside card */}
+              <div className="absolute top-4 right-14 z-20">
+                <ShareButton
+                  text={`"${currentQuestion.question}"\n— OMG She Said YES (${currentQuestion.categoryName})\n\n101 questions to ask each other before you say "I do."`}
+                  url={buildShareUrl(currentQuestion.id)}
+                  label=""
+                  className="p-2 rounded-full hover:bg-white/5"
+                  style={{ color: "rgba(196,155,108,0.45)" }}
+                />
+              </div>
 
               {/* Category label */}
               <div className="relative z-10 text-center pt-3">

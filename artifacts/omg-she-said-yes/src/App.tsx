@@ -12,6 +12,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Welcome} />
+      <Route path="/deck/:questionId" component={Deck} />
       <Route path="/deck" component={Deck} />
       <Route component={NotFound} />
     </Switch>
