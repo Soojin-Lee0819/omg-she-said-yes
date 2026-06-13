@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "build": {
+    "env": {
+      "ENABLE_EXPERIMENTAL_COREPACK": "1"
+    }
+  },
+  "installCommand": "pnpm install --frozen-lockfile --prod --filter @workspace/api-server...",
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
+}
